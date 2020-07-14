@@ -36,14 +36,20 @@ router.put("/:id", async (req, res, next) => {
   if (!widget || JSON.stringify(widget) === '{}' ) {
     res.status(400).send('widget is required"');
   } else {
-    //update widget here
+    const updatedWidget = await WidgetDAO.updateById(widgetId, widget);
+    res.json(updatedWidget);
   }
 });
 
 // Delete
 router.delete("/:id", async (req, res, next) => {
   const widgetId = req.params.id;
-  // delete widget here
+  try {
+    await WidgetDAO.deleteById(widgetId);
+    res.sendStatus(200);
+  } catch(e) {
+    res.status(500).send(e.message);
+  }
 });
 
 module.exports = router;
