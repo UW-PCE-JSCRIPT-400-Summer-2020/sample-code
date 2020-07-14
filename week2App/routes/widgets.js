@@ -9,8 +9,12 @@ router.post("/", async (req, res, next) => {
   if (!widget || JSON.stringify(widget) === '{}' ) {
     res.status(400).send('widget is required');
   } else {
-    const savedWidget = await WidgetDAO.create(widget);
-    res.json(savedWidget); 
+    try {
+      const savedWidget = await WidgetDAO.create(widget);
+      res.json(savedWidget); 
+    } catch(e) {
+      res.status(500).send(e.message);
+    }
   }
 });
 
