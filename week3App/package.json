@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "new-migration": "migrate-mongo create",
+    "migrate": "migrate-mongo up",
+    "undo-last-migration": "migrate-mongo down"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "migrate-mongo": "^7.2.1",
     "mongoose": "^5.9.24"
   }
 }
