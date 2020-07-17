@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const router = Router();
+const router = Router({ mergeParams: true });
 
 const transactionDAO = require('../daos/transaction');
 
@@ -33,7 +33,8 @@ router.get("/:id", async (req, res, next) => {
 
 // Read - all transactions
 router.get("/", async (req, res, next) => {
-  let { page, perPage, userId } = req.query;
+  const userId = req.params.userId;
+  let { page, perPage } = req.query;
   page = page ? Number(page) : 0;
   perPage = perPage ? Number(perPage) : 10;
   const transactions = await transactionDAO.getAll(userId, page, perPage);
