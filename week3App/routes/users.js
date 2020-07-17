@@ -10,6 +10,7 @@ router.post("/", async (req, res, next) => {
     res.status(400).send('user is required');
   } else {
     try {
+      // TODO ensure userId does not already exist
       const saveduser = await userDAO.create(user);
       res.json(saveduser); 
     } catch(e) {
@@ -30,9 +31,10 @@ router.get("/:id", async (req, res, next) => {
 
 // Read - all users
 router.get("/", async (req, res, next) => {
-  let { page, perPage } = req.query;
+  let { page, perPage, query } = req.query;
   page = page ? Number(page) : 0;
   perPage = perPage ? Number(perPage) : 10;
+  // TODO use query in search, if available
   const users = await userDAO.getAll(page, perPage);
   res.json(users);
 });

@@ -20,9 +20,19 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// Read - transaction stats
+router.get("/stats", async (req, res, next) => {
+  const userId = req.params.userId;
+  const { start, end } = req.query;
+  // TODO populate stats with real data
+  const stats = {}
+  res.json(stats);
+});
+
 // Read - single transaction
 router.get("/:id", async (req, res, next) => {
   const userId = req.params.userId;
+  // TODO populate user field in response with actual user data
   const transaction = await transactionDAO.getById(userId, req.params.id);
   if (transaction) {
     res.json(transaction);
@@ -37,6 +47,7 @@ router.get("/", async (req, res, next) => {
   let { page, perPage } = req.query;
   page = page ? Number(page) : 0;
   perPage = perPage ? Number(perPage) : 10;
+  // TODO speed this up
   const transactions = await transactionDAO.getAll(userId, page, perPage);
   res.json(transactions);
 });
