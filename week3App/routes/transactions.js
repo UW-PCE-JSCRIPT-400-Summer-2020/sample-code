@@ -24,16 +24,16 @@ router.post("/", async (req, res, next) => {
 router.get("/stats", async (req, res, next) => {
   const userId = req.params.userId;
   const { start, end } = req.query;
-  // TODO populate stats with real data
-  const stats = {}
+  const stats = await transactionDAO.getStats(userId, start, end)
   res.json(stats);
 });
 
 // Read - single transaction
 router.get("/:id", async (req, res, next) => {
   const userId = req.params.userId;
+  const transactionId = req.params.id;
   // TODO populate user field in response with actual user data
-  const transaction = await transactionDAO.getById(userId, req.params.id);
+  const transaction = await transactionDAO.getById(userId, transactionId);
   if (transaction) {
     res.json(transaction);
   } else {
